@@ -15,7 +15,7 @@ let CorrelationIdMiddleware = class CorrelationIdMiddleware {
         const correlationId = req.headers[exports.CORRELATION_ID_HEADER] || (0, crypto_1.randomUUID)();
         req.headers[exports.CORRELATION_ID_HEADER] = correlationId;
         res.setHeader(exports.CORRELATION_ID_HEADER, correlationId);
-        req['correlationId'] = correlationId;
+        req.correlationId = correlationId;
         next();
     }
 };
