@@ -18,7 +18,7 @@ async function bootstrap() {
     transform: true,
   }));
 
-  // Configuración de Swagger (Interfaz visual para la API)
+  // Configuración de Swagger
   const config = new DocumentBuilder()
     .setTitle('Plataforma Bancaria API')
     .setDescription('API oficial para el simulador de banca')
@@ -26,7 +26,11 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); // Estará disponible en /api
+  SwaggerModule.setup('api', app, document);
+
+  // Registro de Filtro Global de Excepciones
+  const { AllExceptionsFilter } = await import('./common/filters/all-exceptions.filter');
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   await app.listen(3000);
 }
