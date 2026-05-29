@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -29,7 +30,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   // Registro de Filtro Global de Excepciones
-  const { AllExceptionsFilter } = await import('./common/filters/all-exceptions.filter');
   app.useGlobalFilters(new AllExceptionsFilter());
 
   await app.listen(3000);

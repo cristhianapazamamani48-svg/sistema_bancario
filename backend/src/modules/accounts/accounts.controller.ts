@@ -16,7 +16,7 @@ export class AccountsController {
   }
 
   @Get('my-accounts')
-  async getMyAccounts(@Request() req) {
+  async getMyAccounts(@Request() req: any) {
     return this.accountsService.getMyAccounts(req.user.userId);
   }
 }
