@@ -58,7 +58,7 @@ model Account {
   created_at     DateTime      @default(now())
 
   user                  User          @relation(fields: [user_id], references: [id])
-  sent_transactions     Transaction[] @relation("FromAccount", fields: [], references: []) // Need to remove fields if no specific relation on this side, let's fix it below properly
+  sent_transactions     Transaction[] @relation("FromAccount")
   received_transactions Transaction[] @relation("ToAccount")
   ledger_entries        LedgerEntry[]
 
