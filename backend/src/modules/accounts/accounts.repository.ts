@@ -10,8 +10,11 @@ export class AccountsRepository {
     return this.prisma.account.create({ data });
   }
 
-  async findByAccountNumber(accountNumber: string): Promise<Account | null> {
-    return this.prisma.account.findUnique({ where: { account_number: accountNumber } });
+  async findByAccountNumber(accountNumber: string): Promise<any> {
+    return this.prisma.account.findUnique({
+      where: { account_number: accountNumber },
+      include: { user: { select: { id: true, email: true } } },
+    });
   }
 
   async findByUserId(userId: string): Promise<Account[]> {

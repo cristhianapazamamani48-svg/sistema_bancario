@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { AccountsRepository } from './accounts.repository';
 import { Account } from '@prisma/client';
 
@@ -18,5 +18,13 @@ export class AccountsService {
 
   async getMyAccounts(userId: string): Promise<Account[]> {
     return this.accountsRepository.findByUserId(userId);
+  }
+
+  async findByAccountNumber(accountNumber: string): Promise<any> {
+    const account = await this.accountsRepository.findByAccountNumber(accountNumber);
+    if (!account) {
+      throw new NotFoundException('Cuenta no encontrada');
+    }
+    return account;
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Request, Param } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -21,5 +21,11 @@ export class AccountsController {
   @Get('my-accounts')
   async getMyAccounts(@Request() req: any) {
     return this.accountsService.getMyAccounts(req.user.userId);
+  }
+
+  @ApiOperation({ summary: 'Buscar una cuenta por su número' })
+  @Get('search/:accountNumber')
+  async searchAccount(@Param('accountNumber') accountNumber: string) {
+    return this.accountsService.findByAccountNumber(accountNumber);
   }
 }
