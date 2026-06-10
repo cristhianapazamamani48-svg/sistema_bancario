@@ -7,6 +7,7 @@ import { TransactionForm } from './components/TransactionForm';
 import { TransactionList } from './components/TransactionList';
 import { AuditLogs } from './components/AuditLogs';
 import { LoadingSpinner } from './components/LoadingSpinner';
+import { BalanceChart } from './components/BalanceChart';
 import { ApiService } from './services/api';
 
 const AppContent: React.FC = () => {
@@ -95,6 +96,12 @@ const AppContent: React.FC = () => {
               
               {account && (
                 <div style={styles.rightColumn}>
+                  <BalanceChart
+                    transactions={transactions}
+                    currentAccountId={account.id}
+                    currentBalance={account.balance}
+                  />
+                  <div style={{ height: '30px' }} />
                   <TransactionList
                     transactions={transactions}
                     currentAccountId={account.id}

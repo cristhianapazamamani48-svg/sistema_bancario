@@ -10,7 +10,15 @@ async function bootstrap() {
   
   // Seguridad básica
   app.use(helmet());
-  app.enableCors();
+
+  // CORS: permite peticiones desde cualquier origen en desarrollo,
+  // o desde el origen especificado por env en producción
+  app.enableCors({
+    origin: process.env.FRONTEND_URL || '*',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-correlation-id'],
+    credentials: true,
+  });
 
   // Validaciones globales
   app.useGlobalPipes(new ValidationPipe({
@@ -27,11 +35,14 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api-docs', app, document);
 
   // Registro de Filtro Global de Excepciones
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  await app.listen(3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`🚀 Aether Bank API escuchando en el puerto ${port}`);
 }
 bootstrap();
+

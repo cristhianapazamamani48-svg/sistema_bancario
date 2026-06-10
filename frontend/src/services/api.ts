@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:3000';
+// En producción (Nginx), las llamadas van al mismo dominio bajo /api
+// En desarrollo local, Vite hace proxy de /api -> localhost:3000
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 // Helper to generate UUID v4 for the Correlation ID
 function generateUUID(): string {
