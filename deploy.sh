@@ -24,7 +24,9 @@ echo ""
 # -------------------------------------------------------
 echo "📦 [1/4] Instalando dependencias del Backend..."
 cd backend
-npm install --production=false
+# Se agregan flags para evitar auditorías de red y reportes de fondos, reduciendo
+# drásticamente el uso de memoria RAM y previniendo que se cuelgue en VPS pequeños.
+npm install --production=false --no-audit --no-fund --prefer-offline
 
 echo ""
 echo "🗄️  [2/4] Aplicando migraciones de base de datos..."
@@ -41,7 +43,7 @@ npm run build
 echo ""
 echo "🎨 [4/4] Compilando Frontend (React → HTML/CSS/JS estático)..."
 cd ../frontend
-npm install
+npm install --no-audit --no-fund --prefer-offline
 npm run build
 
 echo ""
